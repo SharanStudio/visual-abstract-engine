@@ -78,19 +78,21 @@ export default async (req: any, res: any) => {
       .join('');
 
     let artifact: GeneratedArtifact;
-    try {
-      const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) {
-        throw new Error('No JSON found in response');
-      }
-      artifact = JSON.parse(jsonMatch[0]);
-    } catch (parseError) {
-      console.error('Failed to parse Claude response:', responseText);
-      return res.status(500).json({ 
-        error: 'Failed to parse generated artifact',
-        details: parseError instanceof Error ? parseError.message : 'Unknown error'
-      });
-    }
+try {
+  const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) {
+    throw new Error('No JSON found in response');
+  }
+  artifact = JSON.parse(jsonMatch[0]);
+} catch (parseError) {
+  console.error('Parse error details:', parseError);
+  console.error('Response text length:', responseText.length);
+  console.error('Response first 500 chars:', responseText.substring(0, 500));
+  return res.status(500).json({ 
+    error: 'Failed to parse generated artifact',
+    details: parseError instanceof Error ? parseError.message : 'Unknown error'
+  });
+}
 
     if (!artifact.htmlArtifact) {
       return res.status(500).json({ error: 'No HTML artifact generated' });
