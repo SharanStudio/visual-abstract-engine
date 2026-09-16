@@ -90,4 +90,28 @@ export default async (req: VercelRequest, res: VercelResponse) => {
     } catch (parseError) {
       console.error('Failed to parse Claude response:', responseText);
       return res.status(500).json({ 
-        error: 'Failed to parse chat
+        error: 'Failed to parse chat response',
+        details: parseError instanceof Error ? parseError.message : 'Unknown error'
+      });
+    }
+
+    if (!chatResponse.html) {
+      return res.status(500).json({ error: 'No HTML returned in chat response' });
+    }
+
+    return res.status(200).json({
+      success: true,
+      html: chatResponse.html,
+      explanation: chatResponse.explanation,
+      accuracy_note: chatResponse.accuracy_note || null,
+      timestamp: new Date().toISOString()
+    });
+
+  } catch (error) {
+    console.error('Chat error:', error);
+    return res.status(500).json({
+      error: 'Failed to process chat message',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
+};
