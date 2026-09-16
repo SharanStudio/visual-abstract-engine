@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch api/generate-abstract.ts",
-    "start": "node index.js",
+    "start": "echo 'API deployed'",
     "build": "echo 'Vercel handles build'"
   },
   "keywords": [
