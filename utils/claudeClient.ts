@@ -11,4 +11,4 @@ export const claudeClient = new Anthropic({
 });
 
 export const MODEL = 'claude-opus-4-6';
-export const MAX_TOKENS = 3000;
+export const MAX_TOKENS = 4500;
