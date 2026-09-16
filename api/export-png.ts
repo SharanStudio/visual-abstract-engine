@@ -8,12 +8,10 @@ interface ExportRequest {
 }
 
 export default async (req: any, res: any) => {
-  // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  // Handle OPTIONS request
   if (req.method === 'OPTIONS') {
     res.status(200).end();
     return;
@@ -58,4 +56,7 @@ export default async (req: any, res: any) => {
     console.error('Export PNG error:', error);
     return res.status(500).json({
       error: 'Failed to export PNG',
-      details: error
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
+};
