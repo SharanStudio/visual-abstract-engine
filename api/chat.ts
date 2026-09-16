@@ -1,6 +1,6 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import { claudeClient, MODEL } from '../utils/claudeClient.ts';
-import { buildChatPrompt, AbstractMetadata } from '../utils/promptEngine.ts';
+import { claudeClient, MODEL } from '../utils/claudeClient';
+import { buildChatPrompt, AbstractMetadata } from '../utils/promptEngine';
 
 interface ChatMessage {
   role: 'user' | 'assistant';
