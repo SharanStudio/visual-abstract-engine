@@ -1,4 +1,4 @@
-import { VercelRequest, VercelResponse } from '@vercel/node';
+
 import { claudeClient, MODEL } from '../utils/claudeClient';
 import { buildChatPrompt, AbstractMetadata } from '../utils/promptEngine';
 
@@ -21,7 +21,7 @@ interface ChatResponse {
   accuracy_note?: string;
 }
 
-export default async (req: VercelRequest, res: VercelResponse) => {
+export default async (req: any, res: any) => {
   // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
