@@ -1,0 +1,13 @@
+{
+  "name": "visual-abstract-engine-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.20.0",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "puppeteer": "^21.6.0",
+    "@vercel/node": "^3.0.0"
+  }
+}
