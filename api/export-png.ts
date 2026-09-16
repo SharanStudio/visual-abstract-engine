@@ -1,5 +1,5 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import { exportHTMLToPNG } from '../utils/puppeteerExport.ts';
+import { exportHTMLToPNG } from '../utils/puppeteerExport';
 
 interface ExportRequest {
   html: string;
