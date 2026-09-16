@@ -76,7 +76,7 @@ IMPORTANT:
 - Ensure text is readable at small sizes
 - CRITICAL: Escape all newlines in htmlArtifact as \\n (backslash-n, not literal newlines)
 - CRITICAL: Escape all double quotes in htmlArtifact as \\" (backslash-quote)
-- The entire JSON output must be valid and parseable by JSON.parse()
+- The entire JSON output must be valid and parseable by JSON.parse()`;
 };
 
 export const buildChatPrompt = (params: {
