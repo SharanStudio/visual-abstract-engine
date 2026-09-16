@@ -1,14 +1,3 @@
-export default async function handler(req, res) {
-  // CORS headers
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
-  // Handle OPTIONS request
-  if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
-  }
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { claudeClient, MODEL } from '../utils/claudeClient';
 import { buildChatPrompt, AbstractMetadata } from '../utils/promptEngine';
@@ -33,14 +22,12 @@ interface ChatResponse {
 }
 
 export default async (req: VercelRequest, res: VercelResponse) => {
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-  );
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
+  // Handle OPTIONS request
   if (req.method === 'OPTIONS') {
     res.status(200).end();
     return;
@@ -103,29 +90,4 @@ export default async (req: VercelRequest, res: VercelResponse) => {
     } catch (parseError) {
       console.error('Failed to parse Claude response:', responseText);
       return res.status(500).json({ 
-        error: 'Failed to parse chat response',
-        details: parseError instanceof Error ? parseError.message : 'Unknown error'
-      });
-    }
-
-    if (!chatResponse.html) {
-      return res.status(500).json({ error: 'No HTML returned in chat response' });
-    }
-
-    return res.status(200).json({
-      success: true,
-      html: chatResponse.html,
-      explanation: chatResponse.explanation,
-      accuracy_note: chatResponse.accuracy_note || null,
-      timestamp: new Date().toISOString()
-    });
-
-  } catch (error) {
-    console.error('Chat error:', error);
-    return res.status(500).json({
-      error: 'Failed to process chat message',
-      details: error instanceof Error ? error.message : 'Unknown error'
-    });
-  }
-};
-}
+        error: 'Failed to parse chat
