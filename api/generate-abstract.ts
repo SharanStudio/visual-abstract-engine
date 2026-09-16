@@ -1,4 +1,3 @@
-import { VercelRequest, VercelResponse } from '@vercel/node';
 import { claudeClient, MODEL, MAX_TOKENS } from '../utils/claudeClient';
 import { buildGenerationPrompt, AbstractMetadata } from '../utils/promptEngine';
 
@@ -27,7 +26,7 @@ interface GeneratedArtifact {
   htmlArtifact: string;
 }
 
-export default async (req: VercelRequest, res: VercelResponse) => {
+export default async (req: any, res: any) => {
   // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -47,69 +46,4 @@ export default async (req: VercelRequest, res: VercelResponse) => {
     const body: GenerateAbstractRequest = req.body;
 
     if (!body.abstractText || !body.studyType || !body.outcome || !body.effectSize) {
-      return res.status(400).json({ 
-        error: 'Missing required fields: abstractText, studyType, outcome, effectSize' 
-      });
-    }
-
-    const metadata: AbstractMetadata = {
-      abstractText: body.abstractText,
-      studyType: body.studyType,
-      population: body.population || 'Not specified',
-      intervention: body.intervention,
-      outcome: body.outcome,
-      effectSize: body.effectSize,
-      tone: body.tone || 'common-man'
-    };
-
-    const prompt = buildGenerationPrompt(metadata);
-
-    const message = await claudeClient.messages.create({
-      model: MODEL,
-      max_tokens: MAX_TOKENS,
-      messages: [
-        {
-          role: 'user',
-          content: prompt
-        }
-      ]
-    });
-
-    const responseText = message.content
-      .filter(block => block.type === 'text')
-      .map(block => (block as any).text)
-      .join('');
-
-    let artifact: GeneratedArtifact;
-    try {
-      const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) {
-        throw new Error('No JSON found in response');
-      }
-      artifact = JSON.parse(jsonMatch[0]);
-    } catch (parseError) {
-      console.error('Failed to parse Claude response:', responseText);
-      return res.status(500).json({ 
-        error: 'Failed to parse generated artifact',
-        details: parseError instanceof Error ? parseError.message : 'Unknown error'
-      });
-    }
-
-    if (!artifact.htmlArtifact) {
-      return res.status(500).json({ error: 'No HTML artifact generated' });
-    }
-
-    return res.status(200).json({
-      success: true,
-      artifact: artifact,
-      metadata: metadata
-    });
-
-  } catch (error) {
-    console.error('Generate abstract error:', error);
-    return res.status(500).json({
-      error: 'Failed to generate abstract',
-      details: error instanceof Error ? error.message : 'Unknown error'
-    });
-  }
-};
+      return
