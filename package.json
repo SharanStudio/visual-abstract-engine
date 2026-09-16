@@ -1,0 +1,32 @@
+{
+  "name": "visual-abstract-engine-backend",
+  "version": "1.0.0",
+  "description": "Backend API for visual abstract generation",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch api/generate-abstract.ts",
+    "start": "node index.js",
+    "build": "echo 'Vercel handles build'"
+  },
+  "keywords": [
+    "visual-abstract",
+    "health-research",
+    "claude-ai"
+  ],
+  "author": "Sharan Studio",
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.20.0",
+    "@vercel/node": "^13.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "puppeteer": "^21.6.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.2"
+  }
+}
