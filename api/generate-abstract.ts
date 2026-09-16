@@ -1,6 +1,6 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import { claudeClient, MODEL, MAX_TOKENS } from '../utils/claudeClient.ts';
-import { buildGenerationPrompt, AbstractMetadata } from '../utils/promptEngine.ts';
+import { claudeClient, MODEL, MAX_TOKENS } from '../utils/claudeClient';
+import { buildGenerationPrompt, AbstractMetadata } from '../utils/promptEngine';
 
 interface GenerateAbstractRequest {
   abstractText: string;
